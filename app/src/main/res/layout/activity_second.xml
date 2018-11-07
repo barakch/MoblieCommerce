@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SecondActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="User Details"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/img_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="User Details"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.05"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="email"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.05"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="phone"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.05"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="gender"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/tv_gender_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.05"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="gender"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_birthDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.05"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="DateOfBirth"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/btn_dial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.05"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Dial" />
+
+
+    <Button
+        android:id="@+id/btn_send_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.05"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Send Mail" />
+
+</LinearLayout>

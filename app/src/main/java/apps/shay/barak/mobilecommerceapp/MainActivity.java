@@ -1,5 +1,6 @@
 package apps.shay.barak.mobilecommerceapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +13,11 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    public static final int PICK_IMAGE = 1;
     private EditText edName, edEmail, edPhone, edPassword, edBirth;
     private RadioGroup rgGender;
+    private String imagePath;
 
 
     @Override
@@ -44,33 +48,128 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.btn_select_image:
-                Toast.makeText(getApplicationContext(), "select image", Toast.LENGTH_SHORT).show();
-
-
+                selectImage();
                 break;
         }
 
     }
 
 
+    private void validateSubmittedData() {
 
-    private void validateSubmittedData(){
-
-        if(!validateEmail(edEmail.getText().toString())){
-            //Tell the user about the relevant error
+        if (!validateName(edName.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "Full Name is not valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!validateEmail(edEmail.getText().toString())) {
             Toast.makeText(getApplicationContext(), "Email is not valid", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!validatePhone(edPhone.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "Phone is not valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!validatePassword(edPassword.getText().toString())) {
+            if (edPassword.getText().toString().length() < 6) {
+                Toast.makeText(getApplicationContext(), "Password is not valid, you need at least 6 characters", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(getApplicationContext(), "Password is not valid, you must use A-Z and numbers only", Toast.LENGTH_SHORT).show();
+        }
+        String gender = validateGender();
+        if (gender == null) {
+            Toast.makeText(getApplicationContext(), "Please choose your gender", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!validateBirth(edBirth.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "Date of birth is not valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Toast.makeText(getApplicationContext(), "Ata gever", Toast.LENGTH_SHORT).show();
+        if(imagePath == null){
+            Toast.makeText(getApplicationContext(), "Please select your avatar image", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+
+        Intent intent = new Intent(getBaseContext(), SecondActivity.class);
+        intent.putExtra("name", edName.getText().toString());
+        intent.putExtra("email", edEmail.getText().toString());
+        intent.putExtra("phone", edPhone.getText().toString());
+        intent.putExtra("password", edPassword.getText().toString());
+        intent.putExtra("gender", gender);
+        intent.putExtra("birthDate", edBirth.getText().toString());
+        intent.putExtra("imagePath", imagePath);
+        startActivity(intent);
     }
 
+    private boolean validateName(String name) {
+        String expression = "^[A-Za-z]+[A-Za-z]$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(name);
+        return name.length() > 2;
+    }
 
-    private boolean validateEmail(String email){
+    private boolean validateEmail(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    private boolean validatePhone(String phone) {
+        String expression = "[0-9*#+() -]*";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches() && phone.length() > 6;
+    }
+
+    private boolean validatePassword(String password) {
+        String expression = "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    private String validateGender() {
+        switch (rgGender.getCheckedRadioButtonId()) {
+            case R.id.rd_male:
+                return "Male";
+
+            case R.id.rd_female:
+                return "Female";
+
+            default:
+                return null;
+        }
+    }
+
+    private boolean validateBirth(String birth) {
+
+        String expression = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(birth);
+        return matcher.matches();
+    }
+
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE) {
+            System.out.println("#########################################");
+            if (data != null) {
+                System.out.println(data.toString() + "");
+                System.out.println(""+data.getDataString());
+                imagePath = data.getDataString();
+            }
+        }
     }
 }
