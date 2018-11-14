@@ -1,4 +1,4 @@
-package apps.shay.barak.mobilecommerceapp;
+package apps.shay.barak.mobilecommerceapp.activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+
+import apps.shay.barak.mobilecommerceapp.R;
 
 public class SplashScreen extends AppCompatActivity {
 

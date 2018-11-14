@@ -1,4 +1,4 @@
-package apps.shay.barak.mobilecommerceapp;
+package apps.shay.barak.mobilecommerceapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import apps.shay.barak.mobilecommerceapp.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,43 +40,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-
             case R.id.btn_submit:
-                Toast.makeText(getApplicationContext(), "Submit", Toast.LENGTH_SHORT).show();
                 validateSubmittedData();
                 break;
-
 
             case R.id.btn_select_image:
                 selectImage();
                 break;
         }
-
     }
-
 
     private void validateSubmittedData() {
 
         if (!validateName(edName.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Full Name is not valid", Toast.LENGTH_SHORT).show();
+            if (edName.getText().toString().length() == 0)
+                Toast.makeText(getApplicationContext(), "Please enter a full name", Toast.LENGTH_SHORT).show();
+            else if (edName.getText().toString().length() < 2)
+                Toast.makeText(getApplicationContext(), "Full Name is too short", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), "Full Name is not valid", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!validateEmail(edEmail.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Email is not valid", Toast.LENGTH_SHORT).show();
+            if (edEmail.getText().toString().length() <= 0)
+                Toast.makeText(getApplicationContext(), "Please enter an Email Address", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), "Email is not valid", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!validatePhone(edPhone.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Phone is not valid", Toast.LENGTH_SHORT).show();
+            if (edPhone.getText().toString().length() <= 0)
+                Toast.makeText(getApplicationContext(), "Please enter a phone number", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), "Phone is not valid -  Should be at least 6 numbers", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!validatePassword(edPassword.getText().toString())) {
-            if (edPassword.getText().toString().length() < 6) {
+            if (edPassword.getText().toString().length() < 6)
                 Toast.makeText(getApplicationContext(), "Password is not valid, you need at least 6 characters", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Toast.makeText(getApplicationContext(), "Password is not valid, you must use A-Z and numbers only", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), "Password is not valid, you must use A-Z and numbers only", Toast.LENGTH_SHORT).show();
+            return;
         }
         String gender = validateGender();
         if (gender == null) {
@@ -82,11 +89,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         if (!validateBirth(edBirth.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Date of birth is not valid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Date of birth is not valid - Example 01.01.1999", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(imagePath == null){
+        if (imagePath == null) {
             Toast.makeText(getApplicationContext(), "Please select your avatar image", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -164,10 +171,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
-            System.out.println("#########################################");
             if (data != null) {
                 System.out.println(data.toString() + "");
-                System.out.println(""+data.getDataString());
+                System.out.println("" + data.getDataString());
                 imagePath = data.getDataString();
             }
         }
